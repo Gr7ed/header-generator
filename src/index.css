@@ -1,0 +1,349 @@
+:root {
+  color: #f8fafc;
+  background: #0b1120;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --accent: #ef4444;
+  --accent-soft: #fca5a5;
+  --surface: rgba(10, 15, 28, 0.86);
+  --text-muted: #cbd5e1;
+  --text-subtle: #94a3b8;
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --panel-width: min(31rem, calc(100vw - 2rem));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 320px;
+  background: #0b1120;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell,
+.header-canvas {
+  min-height: 100vh;
+}
+
+.header-canvas {
+  position: relative;
+  overflow: hidden;
+  background: #111827;
+  isolation: isolate;
+}
+
+.header-canvas__image {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.68) saturate(0.9);
+}
+
+.header-canvas__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(2, 6, 23, 0.66), transparent 54%, rgba(2, 6, 23, 0.2));
+}
+
+.search-panel {
+  position: fixed;
+  z-index: 10;
+  top: clamp(1rem, 25vw + 1rem, 23rem);
+  left: clamp(1rem, 4vw, 3rem);
+  width: var(--panel-width);
+  padding: clamp(1.1rem, 2vw, 1.5rem);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 1.25rem;
+  background: var(--surface);
+  box-shadow: 0 1.5rem 4rem rgba(2, 6, 23, 0.32);
+  backdrop-filter: blur(1.25rem);
+}
+
+.eyebrow,
+.profile-label {
+  margin: 0 0 0.65rem;
+  color: var(--accent-soft);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.search-panel h1 {
+  max-width: 22rem;
+  margin: 0;
+  font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.search-help {
+  max-width: 32rem;
+  margin: 0.85rem 0 1.35rem;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.search-form label {
+  display: block;
+  margin-bottom: 0.45rem;
+  color: #e2e8f0;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.search-controls {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.search-controls input {
+  min-width: 0;
+  flex: 1;
+  border: 1px solid #475569;
+  border-radius: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  outline: none;
+  background: rgba(15, 23, 42, 0.82);
+  color: #f8fafc;
+}
+
+.search-controls input::placeholder {
+  color: var(--text-subtle);
+}
+
+.search-controls input:focus-visible {
+  border-color: #f87171;
+  box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.2);
+}
+
+.search-controls button {
+  flex: 0 0 auto;
+  min-width: 5rem;
+  border: 0;
+  border-radius: 0.65rem;
+  padding: 0 1rem;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  transition: background 150ms ease, transform 150ms ease;
+}
+
+.search-controls button:hover:not(:disabled) {
+  background: #dc2626;
+  transform: translateY(-1px);
+}
+
+.search-controls button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.search-status {
+  min-height: 1.1em;
+  margin: 0.8rem 0 0;
+  color: var(--text-subtle);
+  font-size: 0.75rem;
+}
+
+.search-status--error {
+  color: var(--accent-soft);
+}
+
+.crop-border {
+  position: absolute;
+  z-index: 4;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 25vw;
+  max-height: 22rem;
+  border: 2px solid var(--accent);
+  pointer-events: none;
+}
+
+.profile-card {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: clamp(14rem, 22vw, 24rem);
+  height: 25vw;
+  max-height: 22rem;
+  min-height: 12rem;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(1rem, 2vw, 1.5rem);
+  background: rgba(2, 6, 23, 0.84);
+  color: white;
+  text-align: center;
+}
+
+.profile-card .profile-label {
+  color: var(--text-muted);
+  font-size: clamp(0.48rem, 0.58vw, 0.7rem);
+}
+
+.profile-card__name {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.8vw, 3rem);
+  letter-spacing: 0.12em;
+  line-height: 1.08;
+  text-transform: uppercase;
+}
+
+.divider {
+  width: 50%;
+  height: 0.2vw;
+  min-height: 2px;
+  margin: 1.2vw auto 1.5vw;
+  background: var(--accent);
+}
+
+.profile-card__role,
+.profile-card__contact {
+  margin: 0.3rem 0;
+  font-size: clamp(0.55rem, 1.05vw, 1rem);
+  letter-spacing: 0.02em;
+}
+
+.profile-card__role {
+  margin-bottom: 1.2vw;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.profile-card__contact {
+  color: var(--text-muted);
+  overflow-wrap: anywhere;
+}
+
+.photo-credits {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  padding: 0.7rem 1rem;
+  background: rgba(2, 6, 23, 0.72);
+  color: white;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.photo-credits a {
+  color: var(--accent-soft);
+}
+
+.header-canvas:hover .photo-credits,
+.header-canvas:focus-within .photo-credits {
+  display: block;
+}
+
+.loading-shell {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: var(--space-4);
+  background: #0b1120;
+}
+
+.loading-state {
+  display: flex;
+  max-width: 28rem;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.loading-state--error {
+  color: var(--accent-soft);
+}
+
+.loading-spinner {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+  border: 2px solid #475569;
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 700px) {
+  .search-panel {
+    top: calc(25vw + 0.75rem);
+  }
+
+  .search-controls {
+    flex-direction: column;
+  }
+
+  .search-controls button {
+    min-height: 2.75rem;
+  }
+
+  .profile-card {
+    width: 34vw;
+    min-width: 9.5rem;
+    padding: 0.65rem;
+  }
+
+  .profile-card__role {
+    margin-bottom: 0.6rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .search-panel {
+    top: calc(25vw + 0.5rem);
+  }
+
+  .profile-card {
+    width: 37vw;
+    min-width: 8.5rem;
+  }
+
+  .profile-card__name {
+    font-size: clamp(1.1rem, 6vw, 1.5rem);
+  }
+
+  .profile-card__role,
+  .profile-card__contact {
+    font-size: 0.5rem;
+  }
+}
